@@ -1,0 +1,27 @@
+name: Analyse Vowel Frequency
+on: [push]
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Run Vowel Frequency Anlyser
+      id: vowel_freq
+      run: |
+        FREQ_RESSULT=$(python3 .github/scripts/frequency.py 'data.txt')
+        echo "FREQ_RESULT=$FREQ_RESULT" $GITHUB_ENV
+
+    - name: Update README with Vowel Frequency
+      run: |
+        FREQ_RESULTY="${{ env.FREQ_RESULT }}"
+        GITHUB_USER="${{ github.actor }}"
+        bash .github/scripts/update_readme.sh  "$FREQ_RESULT" "GITHUB_USER"
