@@ -7,22 +7,8 @@ inputs:
     required: true
 
 runs:
-  using: 'composite'
-  steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-      
-    - name: Set Up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        
-    - name: Run Vowel Frequency Analyser
-      shell: bash
-      run: |
-        python3 .github/scripts/frequency.py ${{inputs.file }}
-        
-    - name: Update README with Vowel Frequency
-      shell: bash
-      run: |
-        bash .github/scripts/update_readme.sh
+  using: 'docker'
+  image: 'ghcr.io/georges034302/vowel-frequency-analyzer:latest'
+  entrypoint: ['/bin/bash', '/github/scripts/entrypoint.sh']
+  env:
+    FILE: ${{ inputs.file }}
