@@ -14,10 +14,10 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Run Vowel Frequency Anlyser
+    - name: Run Vowel Frequency Analyser
       id: vowel_freq
       run: |
-        FREQ_RESSULT=$(python3 .github/scripts/frequency.py 'data.txt')
+        FREQ_RESULT=$(python3 .github/scripts/frequency.py 'data.txt')
         echo "FREQ_RESULT=$FREQ_RESULT" $GITHUB_ENV
 
     - name: Update README with Vowel Frequency
